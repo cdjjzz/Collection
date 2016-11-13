@@ -191,7 +191,7 @@ public class ListConllection<T> implements Conllection<T>{
     	Object[] o=t.toArray();
     	ensureCapacityInternal(size+o.length);
     	System.arraycopy(o, 0, elementData, size+1,o.length);
-    	size+=o.length;
+    	size+=o.length ;
     	return o.length != 0;
     }
 }
