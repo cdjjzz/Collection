@@ -1,8 +1,6 @@
 package util;
 
-import java.util.TreeMap;
-
-
+import java.util.LinkedList;
 
 public class ListNode<T extends Comparable<T>> implements Conllection<T> {
 	private class Node{
@@ -44,14 +42,34 @@ public class ListNode<T extends Comparable<T>> implements Conllection<T> {
 
 	@Override
 	public boolean contails(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		return indexOf(o)>-1;
 	}
-
+	public int indexOf(Object o){
+		int c=0;
+		if(o==null){
+			for(Node n=first;n!=null;n=n.next){
+				if(n.t==null)
+					return c;
+					c++;
+			}
+		}else{
+			for(Node n=first;n!=null;n=n.next){
+				if(o.equals(n.t))
+					return c;
+					c++;
+			}
+		}
+		return -1;
+	}
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] o=new Object[size];
+		int c=0;
+		for(Node n=first;n!=null;n=n.next){
+			o[c]=n.t;
+			c++;
+		}
+		return o;
 	}
 
 	@Override
@@ -111,8 +129,28 @@ public class ListNode<T extends Comparable<T>> implements Conllection<T> {
 
 	@Override
 	public T fastRemove(T t) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+	public void removeMax(){
+		if(first==null)
+			return;
+		Node max=first;
+		Node currt=first;
+		Node prev=null;
+		while(currt.next!=null){
+			//第一个和第二个比较
+			if(max.t.compareTo(currt.next.t)<0){
+				max=currt.next;
+				prev=currt;
+			}
+			currt=currt.next;
+		}
+		if(prev==null)
+			first=first.next;
+		else
+			prev.next=prev.next.next;
+		--size;	
+		modCount++;
 	}
 	private void LinkLast(T t){
 		final Node n=new Node(t);
@@ -194,34 +232,15 @@ public class ListNode<T extends Comparable<T>> implements Conllection<T> {
 		n.addFirst("z");
 		n.add("z1");
 		n.add("z2");
+		System.out.println(n.contails("z"));
+		System.out.println(n.contails("z2"));
 		for (int i = 0; i < n.size(); i++) {
 			System.out.println(n.get(i));
 		}
-		System.out.println("-----------------");
-		ListNode<String> l=new ListNode<>();
-		l.addFirst("z");
-		l.addFirst("z1");
-		l.addFirst("z2");
-		for (int i = 0; i < l.size(); i++) {
-			System.out.println(l.get(i));
+		Object[] ss=n.toArray();
+		for (int i = 0; i < ss.length; i++) {
+			System.out.println(ss[i]);
 		}
-		System.out.println("-------------------");
-		ListNode<Integer> com=new ListNode<>();
-		com.add(10);
-		com.add(6);
-		com.add(7);
-		com.add(1);
-		com.add(4);
-		com.add(8);
-		com.add(2, 5);
-		com.add(0,3);
-		System.out.println(111);
-		com.revolve();
-		for (int i = 0; i < com.size(); i++) {
-			System.out.println(com.get(i));
-		}
-		
-		
 	}
 
 }
